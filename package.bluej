@@ -96,6 +96,7 @@ target6.editor.x=0
 target6.editor.y=0
 target6.height=50
 target6.name=Ataque
+target6.naviview.expanded=true
 target6.showInterface=false
 target6.type=ClassTarget
 target6.typeParameters=
