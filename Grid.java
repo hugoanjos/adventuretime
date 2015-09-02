@@ -17,6 +17,8 @@ public class Grid extends JPanel implements ActionListener {
     private Score score;
     private Player player;
     private Enemy enemy;
+    private Ataque attack;
+    private String direcao;
     
     private boolean isPlaying = true;
 
@@ -51,6 +53,8 @@ public class Grid extends JPanel implements ActionListener {
         if (isPlaying) {
             g2d.drawImage(player.getImage(), player.getX(), player.getY(), this);
             g2d.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(), this);
+            if (attack!=null) attack.mover();
+            if (attack!=null) g2d.drawImage(attack.getImage(), attack.getX(), attack.getY(), this);
         }
 
         Toolkit.getDefaultToolkit().sync();
@@ -63,7 +67,7 @@ public class Grid extends JPanel implements ActionListener {
         repaint();  
     }
     
-    
+
     private class TAdapter extends KeyAdapter {
 
         public void keyPressed(KeyEvent e) {
@@ -79,25 +83,33 @@ public class Grid extends JPanel implements ActionListener {
                 case KeyEvent.VK_LEFT:
                     player.setImage("esquerda");
                     player.setX(player.getX()-20);
+                    direcao = "esquerda"; 
                     break;
                     
                 case KeyEvent.VK_RIGHT:
                     player.setImage("direita");
                     player.setX(player.getX()+20);
+                    direcao = "direita";
                     break;
                     
                 case KeyEvent.VK_UP:
                     player.setImage("cima");
                     player.setY(player.getY()-20);
+                    direcao = "cima";
                     break;
                     
                 case KeyEvent.VK_DOWN:
                     player.setImage("baixo");
                     player.setY(player.getY()+20);
+                    direcao = "baixo";
                     break;
-            }
+                    
+                case KeyEvent.VK_SPACE:
+                    attack = new Ataque(player.getX(), player.getY(), direcao);
+                    break;
             
         }
     }
-    
+    }
+
 }
