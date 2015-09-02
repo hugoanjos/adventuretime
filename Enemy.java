@@ -4,12 +4,12 @@ import java.util.Random;
 import java.awt.Rectangle;
 
 /**
- * Write a description of class Food here.
+ * Write a description of class Enemy here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Player
+public class Enemy
 {
     private int x;
     private int y;
@@ -17,17 +17,17 @@ public class Player
     private int height;
     private Image image;
     private String direcao;
-    private String left = "images/left.png";
-    private String right = "images/right.png";
-    private String up = "images/up.png";
-    private String down = "images/down.png";;
+    private String left = "images/enemyleft.png";
+    private String right = "images/enemyright.png";
+    private String up = "images/enemyup.png";
+    private String down = "images/enemydown.png";;
     private Rectangle hitbox;
     
-    public Player() {
-        this(50, 300, "direita");
+    public Enemy() {
+        this(400, 300, "direita");
     }
     
-    public Player(int x, int y, String direcao) {
+    public Enemy(int x, int y, String direcao) {
         setImage(direcao);
         this.x = x;
         this.y = y;

@@ -16,6 +16,7 @@ public class Grid extends JPanel implements ActionListener {
     private Timer timer;
     private Score score;
     private Player player;
+    private Enemy enemy;
     
     private boolean isPlaying = true;
 
@@ -33,6 +34,7 @@ public class Grid extends JPanel implements ActionListener {
         add(score);       
         
         player = new Player();
+        enemy = new Enemy();
         
         timer = new Timer(5, this);
         timer.start();
@@ -48,7 +50,7 @@ public class Grid extends JPanel implements ActionListener {
         
         if (isPlaying) {
             g2d.drawImage(player.getImage(), player.getX(), player.getY(), this);
-            
+            g2d.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(), this);
         }
 
         Toolkit.getDefaultToolkit().sync();
