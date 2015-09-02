@@ -79,7 +79,7 @@ public class Ataque
                 setX(x+5);
                 break;
             case "esquerda":
-                setY(x-5);
+                setX(x-5);
                 break;
         }
     }

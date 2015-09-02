@@ -24,10 +24,11 @@ public class Enemy
     private Rectangle hitbox;
     
     public Enemy() {
-        this(400, 300, "direita");
+        this(200, 300, "esquerda");
     }
     
     public Enemy(int x, int y, String direcao) {
+        this.direcao = direcao;
         setImage(direcao);
         this.x = x;
         this.y = y;
@@ -64,6 +65,14 @@ public class Enemy
     public Rectangle getHitbox() {
         return hitbox;
     }
+    
+    public String getDirecao() {
+        return direcao;
+    }
+    
+    public void setDirecao(String direcao) {
+        this.direcao = direcao;
+    }
    
     public void setHitbox(int p1, int p2, int largura, int altura) {
         hitbox = new Rectangle(p1, p2, largura, altura);
@@ -95,6 +104,27 @@ public class Enemy
                 image = ii.getImage();
                 width = image.getWidth(null);
                 height = image.getHeight(null);
+                break;
+            default:
+                break;
+        }
+    }
+    
+    public void mover() {
+        switch(direcao) {
+            case "cima":
+                setY(y-50);
+                break;
+            case "baixo":
+                setY(y+50);
+                break;
+            case "direita":
+                setX(x+50);
+                break;
+            case "esquerda":
+                setX(x-50);
+                break;
+            default:
                 break;
         }
     }

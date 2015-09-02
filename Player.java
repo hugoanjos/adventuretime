@@ -28,6 +28,7 @@ public class Player
     }
     
     public Player(int x, int y, String direcao) {
+        this.direcao = direcao;
         setImage(direcao);
         this.x = x;
         this.y = y;

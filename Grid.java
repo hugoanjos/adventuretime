@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.lang.Math;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -19,6 +20,7 @@ public class Grid extends JPanel implements ActionListener {
     private Enemy enemy;
     private Ataque attack;
     private String direcao;
+    public int enemyMove;
     
     private boolean isPlaying = true;
 
@@ -38,10 +40,11 @@ public class Grid extends JPanel implements ActionListener {
         player = new Player();
         enemy = new Enemy();
         
+        enemyMove = 0;
+        
         timer = new Timer(5, this);
         timer.start();
     }
-
 
     public void paint(Graphics g) {
         super.paint(g);
@@ -55,6 +58,34 @@ public class Grid extends JPanel implements ActionListener {
             g2d.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(), this);
             if (attack!=null) attack.mover();
             if (attack!=null) g2d.drawImage(attack.getImage(), attack.getX(), attack.getY(), this);
+            if (enemy != null){
+                if(enemyMove < 50){
+                    enemyMove++;
+                } else {
+                    int maiorDist = player.getX() - enemy.getX();
+                    if(Math.abs(maiorDist) < Math.abs(player.getY() - enemy.getY())){
+                        maiorDist = player.getY() - enemy.getY();
+                        if(maiorDist < 0) {
+                            enemy.setImage("cima");
+                            enemy.setDirecao("cima");
+                        } else {
+                            enemy.setImage("baixo");
+                            enemy.setDirecao("baixo");
+                        }
+                    } else {
+                        if(maiorDist < 0) {
+                            enemy.setImage("esquerda");
+                            enemy.setDirecao("esquerda");
+                        } else {
+                            enemy.setImage("direita");
+                            enemy.setDirecao("direita");
+                        }
+                    }
+                    enemy.mover();
+                    g2d.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(), this);
+                    enemyMove = 0;
+                }
+            }
         }
 
         Toolkit.getDefaultToolkit().sync();
@@ -62,11 +93,9 @@ public class Grid extends JPanel implements ActionListener {
         
     }
 
-
     public void actionPerformed(ActionEvent e) {        
         repaint();  
     }
-    
 
     private class TAdapter extends KeyAdapter {
 
@@ -82,25 +111,25 @@ public class Grid extends JPanel implements ActionListener {
                     
                 case KeyEvent.VK_LEFT:
                     player.setImage("esquerda");
-                    player.setX(player.getX()-20);
+                    player.setX(player.getX()-50);
                     direcao = "esquerda"; 
                     break;
                     
                 case KeyEvent.VK_RIGHT:
                     player.setImage("direita");
-                    player.setX(player.getX()+20);
+                    player.setX(player.getX()+50);
                     direcao = "direita";
                     break;
                     
                 case KeyEvent.VK_UP:
                     player.setImage("cima");
-                    player.setY(player.getY()-20);
+                    player.setY(player.getY()-50);
                     direcao = "cima";
                     break;
                     
                 case KeyEvent.VK_DOWN:
                     player.setImage("baixo");
-                    player.setY(player.getY()+20);
+                    player.setY(player.getY()+50);
                     direcao = "baixo";
                     break;
                     
@@ -108,8 +137,8 @@ public class Grid extends JPanel implements ActionListener {
                     attack = new Ataque(player.getX(), player.getY(), direcao);
                     break;
             
-        }
-    }
+                }
+            }
     }
 
 }
