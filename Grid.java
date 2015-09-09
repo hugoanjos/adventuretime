@@ -20,6 +20,7 @@ public class Grid extends JPanel implements ActionListener {
     private Enemy enemy;
     private Ataque attack;
     private String direcao;
+    private Lista lista = new Lista();
     public int enemyMove;
     
     private boolean isPlaying = true;
@@ -56,8 +57,15 @@ public class Grid extends JPanel implements ActionListener {
         if (isPlaying) {
             g2d.drawImage(player.getImage(), player.getX(), player.getY(), this);
             g2d.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(), this);
-            if (attack!=null) attack.mover();
-            if (attack!=null) g2d.drawImage(attack.getImage(), attack.getX(), attack.getY(), this);
+            if (lista.isEmpty() == false) {
+                for (int i = 0; i < lista.getSize(); i++) {
+                        lista.getAtaque(i).mover();
+                        //if (lista.getAtaque(i).getX() < 0 || lista.getAtaque(i).getX() > 800 || lista.getAtaque(i).getY() < 0 || lista.getAtaque(i).getY() > 600) {
+                          //  lista.remover(i);
+                        //}
+                        g2d.drawImage(lista.getAtaque(i).getImage(), lista.getAtaque(i).getX(), lista.getAtaque(i).getY(), this);
+                }
+            }
             if (enemy != null){
                 if(enemyMove < 50){
                     enemyMove++;
@@ -134,7 +142,8 @@ public class Grid extends JPanel implements ActionListener {
                     break;
                     
                 case KeyEvent.VK_SPACE:
-                    attack = new Ataque(player.getX(), player.getY(), direcao);
+                    lista.inserir(new Ataque(player.getX(), player.getY(), direcao));
+
                     break;
             
                 }
