@@ -18,6 +18,7 @@ public class Ataque
     private Rectangle hitbox;
     private ImageIcon ii = new ImageIcon("images/attack.png");
     private Image image = ii.getImage();
+    private Ataque proximo;
     private int width = image.getWidth(null);
     private int height = image.getHeight(null);
     
@@ -49,6 +50,14 @@ public class Ataque
         
     public Image getImage() {
         return image;
+    }
+    
+    public void setProximo(Ataque _ataque) {
+        this.proximo = _ataque;
+    }
+    
+    public Ataque getProximo() {
+        return this.proximo;
     }
     
     public int getWidth() {

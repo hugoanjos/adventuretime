@@ -14,6 +14,7 @@ dependency4.type=UsesDependency
 dependency5.from=Grid
 dependency5.to=Ataque
 dependency5.type=UsesDependency
+<<<<<<< HEAD
 dependency6.from=Arvore
 dependency6.to=Mapa
 dependency6.type=UsesDependency
@@ -31,6 +32,19 @@ package.editor.x=-8
 package.editor.y=-8
 package.numDependencies=8
 package.numTargets=9
+=======
+dependency6.from=Fila
+dependency6.to=Ataque
+dependency6.type=UsesDependency
+objectbench.height=76
+objectbench.width=647
+package.editor.height=555
+package.editor.width=549
+package.editor.x=683
+package.editor.y=0
+package.numDependencies=6
+package.numTargets=7
+>>>>>>> origin/master
 package.showExtends=true
 package.showUses=true
 project.charset=UTF-8
@@ -84,12 +98,21 @@ target4.showInterface=false
 target4.type=ClassTarget
 target4.typeParameters=
 target4.width=80
+<<<<<<< HEAD
 target4.x=80
 target4.y=10
 target5.editor.height=700
 target5.editor.width=900
 target5.editor.x=32
 target5.editor.y=12
+=======
+target4.x=70
+target4.y=250
+target5.editor.height=780
+target5.editor.width=1378
+target5.editor.x=-8
+target5.editor.y=-8
+>>>>>>> origin/master
 target5.height=50
 target5.name=Arvore
 target5.naviview.expanded=true
@@ -97,12 +120,21 @@ target5.showInterface=false
 target5.type=ClassTarget
 target5.typeParameters=
 target5.width=80
+<<<<<<< HEAD
 target5.x=620
 target5.y=160
 target6.editor.height=700
 target6.editor.width=900
 target6.editor.x=587
 target6.editor.y=12
+=======
+target5.x=200
+target5.y=80
+target6.editor.height=728
+target6.editor.width=683
+target6.editor.x=683
+target6.editor.y=0
+>>>>>>> origin/master
 target6.height=50
 target6.name=Enemy
 target6.naviview.expanded=true
@@ -110,6 +142,7 @@ target6.showInterface=false
 target6.type=ClassTarget
 target6.typeParameters=
 target6.width=80
+<<<<<<< HEAD
 target6.x=70
 target6.y=250
 target7.editor.height=842
@@ -118,11 +151,22 @@ target7.editor.x=-8
 target7.editor.y=-8
 target7.height=50
 target7.name=Grid
+=======
+target6.x=390
+target6.y=30
+target7.editor.height=700
+target7.editor.width=900
+target7.editor.x=723
+target7.editor.y=20
+target7.height=50
+target7.name=Fila
+>>>>>>> origin/master
 target7.naviview.expanded=true
 target7.showInterface=false
 target7.type=ClassTarget
 target7.typeParameters=
 target7.width=80
+<<<<<<< HEAD
 target7.x=200
 target7.y=80
 target8.editor.height=700
@@ -151,3 +195,7 @@ target9.typeParameters=
 target9.width=80
 target9.x=470
 target9.y=160
+=======
+target7.x=390
+target7.y=100
+>>>>>>> origin/master
