@@ -27,7 +27,7 @@ public class Grid extends JPanel implements ActionListener {
     private boolean enemyAlive = true;
     private boolean gameOver = false;
     
-    private boolean isPlaying = true;
+    private boolean isPlaying = false;
 
     private Font font;
        
@@ -47,7 +47,7 @@ public class Grid extends JPanel implements ActionListener {
         //mover essa linha para outro lugar quando a troca de níveis estiver pronta
         listaInimigos.inserirInimigos(3);
         
-        enemyMove = 0;
+        //enemyMove = 0;
         
         timer = new Timer(6, this);
         timer.start();
@@ -59,6 +59,7 @@ public class Grid extends JPanel implements ActionListener {
         score.paintComponent(g);
         
         Graphics2D g2d = (Graphics2D)g;        
+        
         
         if (isPlaying) {
             g2d.drawImage(player.getImage(), player.getX(), player.getY(), this);
@@ -134,6 +135,8 @@ public class Grid extends JPanel implements ActionListener {
                     }
                 }
             }
+        } else {
+            pressToStart(g);
         }
 
         Toolkit.getDefaultToolkit().sync();
@@ -141,6 +144,21 @@ public class Grid extends JPanel implements ActionListener {
         
     }
     
+    public void pressToStart(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        try{
+            File file = new File("fonts/VT323-Regular.ttf");
+            font = Font.createFont(Font.TRUETYPE_FONT, file);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(font);
+            font = font.deriveFont(Font.PLAIN,36);
+            g2d.setFont(font);
+            g2d.setColor(Color.WHITE);
+        }catch (Exception e){
+            System.out.println(e.toString());
+        }   
+        g2d.drawString("Press ENTER to start", 250, 300);
+    }
     
     public void actionPerformed(ActionEvent e) {  
         if (gameOver == false) {
@@ -160,7 +178,7 @@ public class Grid extends JPanel implements ActionListener {
 
             switch (key){
                 case KeyEvent.VK_ENTER:
-                    score.addScore(100);
+                    isPlaying = true;
                     break;
                     
                 case KeyEvent.VK_LEFT:
@@ -200,7 +218,6 @@ public class Grid extends JPanel implements ActionListener {
                         lista.inserir(new Ataque(player.getX()+10, player.getY()+10, direcao));
                     }
                     break;
-            
                 }
             }
     }
