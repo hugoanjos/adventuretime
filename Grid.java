@@ -164,25 +164,33 @@ public class Grid extends JPanel implements ActionListener {
                     
                 case KeyEvent.VK_LEFT:
                     player.setImage("esquerda");
-                    player.setX(player.getX()-50);
+                    if((player.getX()-20) > 0) {
+                        player.setX(player.getX()-50);
+                    }
                     direcao = "esquerda"; 
                     break;
                     
                 case KeyEvent.VK_RIGHT:
                     player.setImage("direita");
-                    player.setX(player.getX()+50);
+                    if((player.getX()+50) < 800) {
+                        player.setX(player.getX()+50);
+                    }
                     direcao = "direita";
                     break;
                     
                 case KeyEvent.VK_UP:
                     player.setImage("cima");
-                    player.setY(player.getY()-50);
+                    if((player.getY()-20) > 0) {
+                        player.setY(player.getY()-50);
+                    }
                     direcao = "cima";
                     break;
                     
                 case KeyEvent.VK_DOWN:
                     player.setImage("baixo");
-                    player.setY(player.getY()+50);
+                    if((player.getY()+50) < 600) {
+                        player.setY(player.getY()+50);
+                    }
                     direcao = "baixo";
                     break;
                     
