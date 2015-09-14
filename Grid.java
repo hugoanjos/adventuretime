@@ -66,6 +66,8 @@ public class Grid extends JPanel implements ActionListener {
                 for (int i = 0; i < listaInimigos.getSize(); i++) {
                     g2d.drawImage(listaInimigos.getInimigo(i).getImage(), listaInimigos.getInimigo(i).getX(), listaInimigos.getInimigo(i).getY(), this);
                 }
+            } else {
+                enemyAlive = false;
             }
             player.setHitbox(player.getX(), player.getY(), player.getWidth(), player.getHeight());
             
@@ -93,8 +95,8 @@ public class Grid extends JPanel implements ActionListener {
                             }
 
                         }
-                    }
                 }
+            }
             
             if (listaInimigos.isEmpty() == false){ 
                 for (int i = 0; i < listaInimigos.getSize(); i++) {
@@ -139,7 +141,7 @@ public class Grid extends JPanel implements ActionListener {
     }
     
     
-    public void actionPerformed(ActionEvent e) {        
+    public void actionPerformed(ActionEvent e) {  
         if (gameOver == false) {
             repaint();
         } else {
