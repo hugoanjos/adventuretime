@@ -8,6 +8,14 @@ import java.util.Random;
 public class ListaInimigos
 {
     private Enemy inicio;
+    Random r = new Random();
+    private Spawnpoint p1 = new Spawnpoint((400+r.nextInt(400)), 100);
+    private Spawnpoint p2 = new Spawnpoint((400+r.nextInt(400)), 200);
+    private Spawnpoint p3 = new Spawnpoint((400+r.nextInt(400)), 250);
+    private Spawnpoint p4 = new Spawnpoint((400+r.nextInt(400)), 300);
+    private Spawnpoint p5 = new Spawnpoint((400+r.nextInt(400)), 400);
+    private Spawnpoint p6 = new Spawnpoint((400+r.nextInt(400)), 500);
+    private Spawnpoint[] spawnpoints = {p1, p2, p3, p4, p5, p6};
     
     public ListaInimigos() {
         this.inicio = null;
@@ -26,12 +34,16 @@ public class ListaInimigos
     }
     
     public void inserirInimigos(int qntd) {
-        Random r = new Random();
-        for (int i = 0; i < qntd; i++) {
-            int x = 300 + r.nextInt(400);
-            int y = 100 + r.nextInt(400);
-            inserir(new Enemy(x, y, "esquerda"));
-        }
+        int i = 0;
+        int ponto;
+        do {
+            ponto = r.nextInt(6);
+            if (spawnpoints[ponto].getUse() == false) {
+                inserir(new Enemy(spawnpoints[ponto].getX(), spawnpoints[ponto].getY(), "Esquerda"));
+                spawnpoints[ponto].setUse(true);
+                i++;
+            }
+        } while (i != qntd);
     }
     
     public void remover(int pos) {
