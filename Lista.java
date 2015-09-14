@@ -28,7 +28,7 @@ public class Lista
     }
     
     public void remover(int pos) {
-        if (isEmpty() == false && pos <=getSize() && pos >= 0) {
+        if (isEmpty() == false && pos <= getSize() && pos >= 0) {
             if (pos == 0) {
                 inicio = inicio.getProximo();
             } else if (pos == getSize()) {

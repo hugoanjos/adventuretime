@@ -19,9 +19,10 @@ public class Grid extends JPanel implements ActionListener {
     private Player player;
     private Enemy enemy;
     private Ataque attack;
-    private String direcao;
+    private String direcao = "direita";
     private Lista lista = new Lista();
     public int enemyMove;
+    private boolean enemyAlive = true;
     
     private boolean isPlaying = true;
 
@@ -60,38 +61,46 @@ public class Grid extends JPanel implements ActionListener {
             if (lista.isEmpty() == false) {
                 for (int i = 0; i < lista.getSize(); i++) {
                         lista.getAtaque(i).mover();
-                        //if (lista.getAtaque(i).getX() < 0 || lista.getAtaque(i).getX() > 800 || lista.getAtaque(i).getY() < 0 || lista.getAtaque(i).getY() > 600) {
-                          //  lista.remover(i);
-                        //}
+                        lista.getAtaque(i).setHitbox(lista.getAtaque(i).getX(), lista.getAtaque(i).getY(), lista.getAtaque(i).getWidth(), lista.getAtaque(i).getHeight());
                         g2d.drawImage(lista.getAtaque(i).getImage(), lista.getAtaque(i).getX(), lista.getAtaque(i).getY(), this);
+                        if (lista.getAtaque(i).getX() < 0 || lista.getAtaque(i).getX() > 800 || lista.getAtaque(i).getY() < 0 || lista.getAtaque(i).getY() > 600) {
+                            lista.remover(i);
+                        } else if (lista.getAtaque(i).getHitbox().intersects(enemy.getHitbox())) {
+                            lista.remover(i);
+                            enemyAlive = false;
+                        }
                 }
+
             }
             if (enemy != null){
-                if(enemyMove < 50){
-                    enemyMove++;
-                } else {
-                    int maiorDist = player.getX() - enemy.getX();
-                    if(Math.abs(maiorDist) < Math.abs(player.getY() - enemy.getY())){
-                        maiorDist = player.getY() - enemy.getY();
-                        if(maiorDist < 0) {
-                            enemy.setImage("cima");
-                            enemy.setDirecao("cima");
-                        } else {
-                            enemy.setImage("baixo");
-                            enemy.setDirecao("baixo");
-                        }
+                if (enemyAlive) {
+                    if(enemyMove < 50){
+                        enemyMove++;
                     } else {
-                        if(maiorDist < 0) {
-                            enemy.setImage("esquerda");
-                            enemy.setDirecao("esquerda");
+                        int maiorDist = player.getX() - enemy.getX();
+                        if(Math.abs(maiorDist) < Math.abs(player.getY() - enemy.getY())){
+                            maiorDist = player.getY() - enemy.getY();
+                            if(maiorDist < 0) {
+                                enemy.setImage("cima");
+                                enemy.setDirecao("cima");
+                            } else {
+                                enemy.setImage("baixo");
+                                enemy.setDirecao("baixo");
+                            }
                         } else {
-                            enemy.setImage("direita");
-                            enemy.setDirecao("direita");
+                            if(maiorDist < 0) {
+                                enemy.setImage("esquerda");
+                                enemy.setDirecao("esquerda");
+                            } else {
+                                enemy.setImage("direita");
+                                enemy.setDirecao("direita");
+                            }
                         }
+                        enemy.mover();
+                        enemy.setHitbox(enemy.getX(), enemy.getY(), enemy.getWidth(), enemy.getHeight());
+                        g2d.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(), this);
+                        enemyMove = 0;
                     }
-                    enemy.mover();
-                    g2d.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(), this);
-                    enemyMove = 0;
                 }
             }
         }
@@ -100,7 +109,8 @@ public class Grid extends JPanel implements ActionListener {
         g.dispose();
         
     }
-
+    
+    
     public void actionPerformed(ActionEvent e) {        
         repaint();  
     }
@@ -142,8 +152,9 @@ public class Grid extends JPanel implements ActionListener {
                     break;
                     
                 case KeyEvent.VK_SPACE:
-                    lista.inserir(new Ataque(player.getX(), player.getY(), direcao));
-
+                    if (lista.getSize() < 6) {
+                        lista.inserir(new Ataque(player.getX(), player.getY(), direcao));
+                    }
                     break;
             
                 }
