@@ -90,6 +90,7 @@ public class Grid extends JPanel implements ActionListener {
                                         lista.remover(i);
                                         listaInimigos.remover(j);
                                         score.addScore(100);
+                                        j = listaInimigos.getSize();
                                     }
                                 }
                             }
