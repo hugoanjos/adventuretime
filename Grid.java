@@ -49,7 +49,7 @@ public class Grid extends JPanel implements ActionListener {
         
         enemyMove = 0;
         
-        timer = new Timer(5, this);
+        timer = new Timer(6, this);
         timer.start();
     }
 
@@ -145,7 +145,7 @@ public class Grid extends JPanel implements ActionListener {
         if (gameOver == false) {
             repaint();
         } else {
-            JOptionPane.showMessageDialog (null, "Game over!");
+            JOptionPane.showMessageDialog (null, "Game over!\n Your score was: " + score.getScore());
             System.exit(0);
         }
     }

@@ -29,7 +29,7 @@ public class ListaInimigos
         Random r = new Random();
         for (int i = 0; i < qntd; i++) {
             int x = 300 + r.nextInt(400);
-            int y = 50 + r.nextInt(450);
+            int y = 100 + r.nextInt(400);
             inserir(new Enemy(x, y, "esquerda"));
         }
     }
