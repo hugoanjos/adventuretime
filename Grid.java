@@ -8,6 +8,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.lang.Math;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import java.io.File;
@@ -23,6 +24,7 @@ public class Grid extends JPanel implements ActionListener {
     private Lista lista = new Lista();
     public int enemyMove;
     private boolean enemyAlive = true;
+    private boolean gameOver = false;
     
     private boolean isPlaying = true;
 
@@ -57,7 +59,10 @@ public class Grid extends JPanel implements ActionListener {
         
         if (isPlaying) {
             g2d.drawImage(player.getImage(), player.getX(), player.getY(), this);
-            g2d.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(), this);
+            if(enemyAlive)g2d.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(), this);
+            
+            player.setHitbox(player.getX(), player.getY(), player.getWidth(), player.getHeight());
+            
             if (lista.isEmpty() == false) {
                 for (int i = 0; i < lista.getSize(); i++) {
                         lista.getAtaque(i).mover();
@@ -72,6 +77,7 @@ public class Grid extends JPanel implements ActionListener {
                 }
 
             }
+            
             if (enemy != null){
                 if (enemyAlive) {
                     if(enemyMove < 50){
@@ -100,9 +106,14 @@ public class Grid extends JPanel implements ActionListener {
                         enemy.setHitbox(enemy.getX(), enemy.getY(), enemy.getWidth(), enemy.getHeight());
                         g2d.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(), this);
                         enemyMove = 0;
+                        
+                        if (player.getHitbox().intersects(enemy.getHitbox())) {
+                            gameOver = true;
+                        }
                     }
                 }
             }
+            
         }
 
         Toolkit.getDefaultToolkit().sync();
@@ -112,7 +123,12 @@ public class Grid extends JPanel implements ActionListener {
     
     
     public void actionPerformed(ActionEvent e) {        
-        repaint();  
+        if (gameOver == false) {
+            repaint();
+        } else {
+            JOptionPane.showMessageDialog (null, "Game over!");
+            System.exit(0);
+        }
     }
 
     private class TAdapter extends KeyAdapter {
@@ -153,7 +169,7 @@ public class Grid extends JPanel implements ActionListener {
                     
                 case KeyEvent.VK_SPACE:
                     if (lista.getSize() < 6) {
-                        lista.inserir(new Ataque(player.getX(), player.getY(), direcao));
+                        lista.inserir(new Ataque(player.getX()+10, player.getY()+10, direcao));
                     }
                     break;
             
