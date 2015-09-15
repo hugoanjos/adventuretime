@@ -287,8 +287,10 @@ public class Grid extends JPanel implements ActionListener {
                     break;
                     
                 case KeyEvent.VK_SPACE:
-                    if (lista.getSize() < 6) {
-                        lista.inserir(new Ataque(player.getX()+10, player.getY()+10, direcao));
+                    if (isPlaying == true) {
+                        if (lista.getSize() < 6) {
+                            lista.inserir(new Ataque(player.getX()+10, player.getY()+10, direcao));
+                        }
                     }
                     break;
                 }
