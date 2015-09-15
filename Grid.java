@@ -220,8 +220,12 @@ public class Grid extends JPanel implements ActionListener {
             g2d.setColor(Color.WHITE);
         }catch (Exception e){
             System.out.println(e.toString());
-        }   
+        }
+        g2d.drawString("ADVENTURE TIME", 295, 250);
         g2d.drawString("Press ENTER to start", 250, 300);
+        font = font.deriveFont(Font.PLAIN,20);
+        g2d.setFont(font);
+        g2d.drawString("Use the arrow keys to move and SPACE to attack.", 215, 400);
     }
     
     public void actionPerformed(ActionEvent e) {  
@@ -233,7 +237,7 @@ public class Grid extends JPanel implements ActionListener {
         if (gameOver == false) {
             repaint();
         } else {
-            JOptionPane.showMessageDialog (null, "Game over!\n Your score was: " + score.getScore());
+            JOptionPane.showMessageDialog (null, "Game over!\nYour score was: " + score.getScore());
             System.exit(0);
         }
     }
