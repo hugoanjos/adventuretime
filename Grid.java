@@ -26,6 +26,8 @@ public class Grid extends JPanel implements ActionListener {
     private Arvore arvore;
     private Mapa mapaAtual;
     private ListaInimigos listaInimigos = new ListaInimigos();
+    private Portal portal1;
+    private Portal portal2;
     public int enemyMove;
     private boolean enemyAlive = true;
     private boolean gameOver = false;
@@ -46,6 +48,10 @@ public class Grid extends JPanel implements ActionListener {
         add(score);       
         
         player = new Player();
+        portal1 = new Portal(600, 100, "portal1");
+        portal1.setHitbox(portal1.getX(), portal1.getY(), portal1.getWidth(), portal1.getHeight());
+        portal2 = new Portal(600, 400, "portal2");
+        portal2.setHitbox(portal2.getX(), portal2.getY(), portal2.getWidth(), portal2.getHeight());
         //enemy = new Enemy();
         //mover essa linha para outro lugar quando a troca de níveis estiver pronta
         nivel = new Nivel();
@@ -149,6 +155,31 @@ public class Grid extends JPanel implements ActionListener {
             pressToStart(g);
         }
 
+        if (enemyAlive == false) {
+            if(mapaAtual.getDireito() != null) {
+                g2d.drawImage(portal1.getImage(), portal1.getX(), portal1.getY(), this);
+            }
+            
+            if(mapaAtual.getEsquerdo() != null) {
+                g2d.drawImage(portal2.getImage(), portal2.getX(), portal2.getY(), this);
+            }
+            
+            if (player.getHitbox().intersects(portal1.getHitbox())) {
+                mapaAtual.setClear(true);
+                mapaAtual = mapaAtual.getDireito();
+                player.setX(50);
+                player.setY(300);
+                listaInimigos.inserirInimigos(mapaAtual.getNumInimigos());
+            }
+            
+            if (player.getHitbox().intersects(portal2.getHitbox())) {
+                mapaAtual.setClear(true);
+                mapaAtual = mapaAtual.getEsquerdo();
+                player.setX(50);
+                player.setY(300);
+                listaInimigos.inserirInimigos(mapaAtual.getNumInimigos());
+            }
+        }
         
         Toolkit.getDefaultToolkit().sync();
         g.dispose();
