@@ -74,7 +74,6 @@ public class Grid extends JPanel implements ActionListener {
         
         Graphics2D g2d = (Graphics2D)g;        
         
-        
         if (isPlaying) {
             g2d.drawImage(player.getImage(), player.getX(), player.getY(), this);
             if(listaInimigos.isEmpty() == false) {
@@ -206,6 +205,7 @@ public class Grid extends JPanel implements ActionListener {
     }
     
     public void pressToStart(Graphics g) {
+        isPlaying = false;
         Graphics2D g2d = (Graphics2D) g;
         try{
             File file = new File("fonts/VT323-Regular.ttf");
@@ -223,7 +223,7 @@ public class Grid extends JPanel implements ActionListener {
     
     public void actionPerformed(ActionEvent e) {  
         if (zerado == true) {
-            JOptionPane.showMessageDialog (null, "Congratulations!\nYou Reached the end.\nYour score was: " + score.getScore());
+            JOptionPane.showMessageDialog (null, "Congratulations!\nYou reached the end.\nYour score was: " + score.getScore());
             System.exit(0);
         }
         

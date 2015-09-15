@@ -15,7 +15,11 @@ public class ListaInimigos
     private Spawnpoint p4 = new Spawnpoint((400+r.nextInt(400)), 300);
     private Spawnpoint p5 = new Spawnpoint((400+r.nextInt(400)), 400);
     private Spawnpoint p6 = new Spawnpoint((400+r.nextInt(400)), 500);
-    private Spawnpoint[] spawnpoints = {p1, p2, p3, p4, p5, p6};
+    private Spawnpoint p7 = new Spawnpoint((400+r.nextInt(400)), 550);
+    private Spawnpoint p8 = new Spawnpoint((400+r.nextInt(400)), 150);
+    private Spawnpoint p9 = new Spawnpoint((400+r.nextInt(400)), 350);
+    private Spawnpoint p10 = new Spawnpoint((400+r.nextInt(400)), 450);
+    private Spawnpoint[] spawnpoints = {p1, p2, p3, p4, p5, p6, p7, p8, p9, p10};
     
     public ListaInimigos() {
         this.inicio = null;
@@ -37,13 +41,17 @@ public class ListaInimigos
         int i = 0;
         int ponto;
         do {
-            ponto = r.nextInt(6);
+            ponto = r.nextInt(10);
             if (spawnpoints[ponto].getUse() == false) {
                 inserir(new Enemy(spawnpoints[ponto].getX(), spawnpoints[ponto].getY(), "Esquerda"));
                 spawnpoints[ponto].setUse(true);
                 i++;
             }
         } while (i != qntd);
+        
+        for (int j = 0; j < spawnpoints.length; j++) {
+            spawnpoints[j].setUse(false);
+        }
     }
     
     public void remover(int pos) {
