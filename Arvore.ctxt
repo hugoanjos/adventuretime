@@ -9,4 +9,6 @@ comment3.params=root\ _node
 comment3.target=Mapa\ removerAux(Mapa,\ Mapa)
 comment4.params=root
 comment4.target=Mapa\ valorMin(Mapa)
-numComments=5
+comment5.params=
+comment5.target=Mapa\ getRaiz()
+numComments=6

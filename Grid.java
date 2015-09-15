@@ -22,6 +22,9 @@ public class Grid extends JPanel implements ActionListener {
     private Ataque attack;
     private String direcao = "direita";
     private Lista lista = new Lista();
+    private Nivel nivel;
+    private Arvore arvore;
+    private Mapa mapaAtual;
     private ListaInimigos listaInimigos = new ListaInimigos();
     public int enemyMove;
     private boolean enemyAlive = true;
@@ -45,7 +48,11 @@ public class Grid extends JPanel implements ActionListener {
         player = new Player();
         //enemy = new Enemy();
         //mover essa linha para outro lugar quando a troca de níveis estiver pronta
-        listaInimigos.inserirInimigos(3);
+        nivel = new Nivel();
+        arvore = nivel.gerarArvoreAleatoria();
+        mapaAtual = arvore.getRaiz();
+        listaInimigos.inserirInimigos(mapaAtual.getNumInimigos());
+        //listaInimigos.inserirInimigos(3);
         
         //enemyMove = 0;
         
@@ -100,7 +107,8 @@ public class Grid extends JPanel implements ActionListener {
                 }
             }
             
-            if (listaInimigos.isEmpty() == false){ 
+            if (listaInimigos.isEmpty() == false) {
+                enemyAlive = true;
                 for (int i = 0; i < listaInimigos.getSize(); i++) {
                     if(listaInimigos.getInimigo(i).getEnemyMove() < 50){
                         listaInimigos.getInimigo(i).setEnemyMove(listaInimigos.getInimigo(i).getEnemyMove()+1);
@@ -134,11 +142,14 @@ public class Grid extends JPanel implements ActionListener {
                         }
                     }
                 }
+            } else {
+                enemyAlive = false;
             }
         } else {
             pressToStart(g);
         }
 
+        
         Toolkit.getDefaultToolkit().sync();
         g.dispose();
         

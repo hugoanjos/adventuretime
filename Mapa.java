@@ -5,6 +5,7 @@ public class Mapa
     private Mapa direito;
     private int numInimigos;
     private int dificuldade;
+    private boolean clear = false;
     
     public Mapa(int x, int numInimigos, int dificuldade) {
         this.x = x;
@@ -38,6 +39,14 @@ public class Mapa
     
     public Mapa getDireito() {
         return this.direito;
+    }
+    
+    public boolean getClear() {
+        return this.clear;
+    }
+    
+    public void setClear(boolean clear) {
+        this.clear = clear;
     }
     
     public void setNumInimigos(int numInimigos){

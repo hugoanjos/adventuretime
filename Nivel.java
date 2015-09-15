@@ -13,7 +13,7 @@ public class Nivel
             dificuldade++;
         }
         level++;
-        tree = gerarArvoreAleatoria();
+        //tree = gerarArvoreAleatoria();
     }
     
     public Arvore gerarArvoreAleatoria(){
