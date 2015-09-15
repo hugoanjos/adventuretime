@@ -20,6 +20,7 @@ public class Nivel
         Arvore aux = new Arvore();
         for(int i = 0; i < 5; i++){
             aux.inserir(gerarMapaAleatorio());
+            level++;
         }
         return aux;
     }

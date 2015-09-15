@@ -53,7 +53,7 @@ public class Grid extends JPanel implements ActionListener {
         portal2 = new Portal(600, 400, "portal2");
         portal2.setHitbox(portal2.getX(), portal2.getY(), portal2.getWidth(), portal2.getHeight());
         //enemy = new Enemy();
-        //mover essa linha para outro lugar quando a troca de níveis estiver pronta
+        
         nivel = new Nivel();
         arvore = nivel.gerarArvoreAleatoria();
         mapaAtual = arvore.getRaiz();
@@ -156,12 +156,26 @@ public class Grid extends JPanel implements ActionListener {
         }
 
         if (enemyAlive == false) {
+            try{
+                File file = new File("fonts/VT323-Regular.ttf");
+                font = Font.createFont(Font.TRUETYPE_FONT, file);
+                GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+                ge.registerFont(font);
+                font = font.deriveFont(Font.PLAIN,20);
+                g2d.setFont(font);
+                g2d.setColor(Color.WHITE);
+            }catch (Exception e){
+                System.out.println(e.toString());
+            }   
+            
             if(mapaAtual.getDireito() != null) {
                 g2d.drawImage(portal1.getImage(), portal1.getX(), portal1.getY(), this);
+                g2d.drawString("Inimigos: " + mapaAtual.getDireito().getNumInimigos(), 620, portal1.getY()+portal1.getHeight()+30);
             }
             
             if(mapaAtual.getEsquerdo() != null) {
                 g2d.drawImage(portal2.getImage(), portal2.getX(), portal2.getY(), this);
+                g2d.drawString("Inimigos: " + mapaAtual.getEsquerdo().getNumInimigos(), 620, portal2.getY()+portal2.getHeight()+30);
             }
             
             if (player.getHitbox().intersects(portal1.getHitbox())) {
