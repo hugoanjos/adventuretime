@@ -31,6 +31,7 @@ public class Grid extends JPanel implements ActionListener {
     public int enemyMove;
     private boolean enemyAlive = true;
     private boolean gameOver = false;
+    private boolean zerado = false;
     
     private boolean isPlaying = false;
 
@@ -179,8 +180,7 @@ public class Grid extends JPanel implements ActionListener {
             }
             
             if (mapaAtual.getEsquerdo() == null && mapaAtual.getDireito() == null) {
-                JOptionPane.showMessageDialog (null, "Congratulations! You reached the end!\n Your score was: " + score.getScore());
-                System.exit(0);
+                zerado = true;
             }
             
             if (player.getHitbox().intersects(portal1.getHitbox())) {
@@ -222,6 +222,11 @@ public class Grid extends JPanel implements ActionListener {
     }
     
     public void actionPerformed(ActionEvent e) {  
+        if (zerado == true) {
+            JOptionPane.showMessageDialog (null, "Congratulations!\nYou Reached the end.\nYour score was: " + score.getScore());
+            System.exit(0);
+        }
+        
         if (gameOver == false) {
             repaint();
         } else {
