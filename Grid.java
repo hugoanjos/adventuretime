@@ -168,14 +168,19 @@ public class Grid extends JPanel implements ActionListener {
                 System.out.println(e.toString());
             }   
             
-            if(mapaAtual.getDireito() != null) {
+            if (mapaAtual.getDireito() != null) {
                 g2d.drawImage(portal1.getImage(), portal1.getX(), portal1.getY(), this);
                 g2d.drawString("Inimigos: " + mapaAtual.getDireito().getNumInimigos(), 620, portal1.getY()+portal1.getHeight()+30);
             }
             
-            if(mapaAtual.getEsquerdo() != null) {
+            if (mapaAtual.getEsquerdo() != null) {
                 g2d.drawImage(portal2.getImage(), portal2.getX(), portal2.getY(), this);
                 g2d.drawString("Inimigos: " + mapaAtual.getEsquerdo().getNumInimigos(), 620, portal2.getY()+portal2.getHeight()+30);
+            }
+            
+            if (mapaAtual.getEsquerdo() == null && mapaAtual.getDireito() == null) {
+                JOptionPane.showMessageDialog (null, "Congratulations! You reached the end!\n Your score was: " + score.getScore());
+                System.exit(0);
             }
             
             if (player.getHitbox().intersects(portal1.getHitbox())) {
