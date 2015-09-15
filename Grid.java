@@ -149,7 +149,9 @@ public class Grid extends JPanel implements ActionListener {
                     }
                 }
             } else {
-                enemyAlive = false;
+                if((!player.getHitbox().intersects(portal1.getHitbox())) && (!player.getHitbox().intersects(portal2.getHitbox()))) {
+                    enemyAlive = false;
+                }
             }
         } else {
             pressToStart(g);
@@ -171,32 +173,33 @@ public class Grid extends JPanel implements ActionListener {
             if (mapaAtual.getDireito() != null) {
                 g2d.drawImage(portal1.getImage(), portal1.getX(), portal1.getY(), this);
                 g2d.drawString("Inimigos: " + mapaAtual.getDireito().getNumInimigos(), 620, portal1.getY()+portal1.getHeight()+30);
+                if (player.getHitbox().intersects(portal1.getHitbox())) {
+                    mapaAtual.setClear(true);
+                    mapaAtual = mapaAtual.getDireito();
+                    player.setX(50);
+                    player.setY(300);
+                    listaInimigos.inserirInimigos(mapaAtual.getNumInimigos());
+                    enemyAlive = true;
+                }
             }
             
             if (mapaAtual.getEsquerdo() != null) {
                 g2d.drawImage(portal2.getImage(), portal2.getX(), portal2.getY(), this);
                 g2d.drawString("Inimigos: " + mapaAtual.getEsquerdo().getNumInimigos(), 620, portal2.getY()+portal2.getHeight()+30);
+                if (player.getHitbox().intersects(portal2.getHitbox())) {
+                    mapaAtual.setClear(true);
+                    mapaAtual = mapaAtual.getEsquerdo();
+                    player.setX(50);
+                    player.setY(300);
+                    listaInimigos.inserirInimigos(mapaAtual.getNumInimigos());
+                    enemyAlive = true;
+                }
             }
             
-            if (mapaAtual.getEsquerdo() == null && mapaAtual.getDireito() == null) {
+            if (enemyAlive == false && mapaAtual.getEsquerdo() == null && mapaAtual.getDireito() == null) {
                 zerado = true;
             }
-            
-            if (player.getHitbox().intersects(portal1.getHitbox())) {
-                mapaAtual.setClear(true);
-                mapaAtual = mapaAtual.getDireito();
-                player.setX(50);
-                player.setY(300);
-                listaInimigos.inserirInimigos(mapaAtual.getNumInimigos());
-            }
-            
-            if (player.getHitbox().intersects(portal2.getHitbox())) {
-                mapaAtual.setClear(true);
-                mapaAtual = mapaAtual.getEsquerdo();
-                player.setX(50);
-                player.setY(300);
-                listaInimigos.inserirInimigos(mapaAtual.getNumInimigos());
-            }
+           
         }
         
         Toolkit.getDefaultToolkit().sync();
