@@ -51,15 +51,6 @@ dependency9.from=Nivel
 dependency9.to=Arvore
 dependency9.type=UsesDependency
 objectbench.height=76
-<<<<<<< HEAD
-objectbench.width=1900
-package.editor.height=864
-package.editor.width=1802
-package.editor.x=-9
-package.editor.y=-9
-package.numDependencies=10
-package.numTargets=10
-=======
 objectbench.width=1334
 package.editor.height=571
 package.editor.width=1236
@@ -67,7 +58,6 @@ package.editor.x=-8
 package.editor.y=-8
 package.numDependencies=17
 package.numTargets=13
->>>>>>> origin/master
 package.showExtends=true
 package.showUses=true
 project.charset=UTF-8
@@ -84,21 +74,12 @@ target1.typeParameters=
 target1.width=80
 target1.x=750
 target1.y=70
-<<<<<<< HEAD
-target10.editor.height=700
-target10.editor.width=900
-target10.editor.x=32
-target10.editor.y=12
-target10.height=50
-target10.name=Nivel
-=======
 target10.editor.height=728
 target10.editor.width=683
 target10.editor.x=683
 target10.editor.y=0
 target10.height=50
 target10.name=Portal
->>>>>>> origin/master
 target10.naviview.expanded=true
 target10.showInterface=false
 target10.type=ClassTarget
@@ -171,10 +152,10 @@ target3.typeParameters=
 target3.width=80
 target3.x=90
 target3.y=10
-target4.editor.height=744
-target4.editor.width=1370
-target4.editor.x=-8
-target4.editor.y=-8
+target4.editor.height=1050
+target4.editor.width=1938
+target4.editor.x=-9
+target4.editor.y=-9
 target4.height=50
 target4.name=Grid
 target4.naviview.expanded=true
@@ -208,21 +189,12 @@ target6.showInterface=false
 target6.type=ClassTarget
 target6.typeParameters=
 target6.width=80
-<<<<<<< HEAD
-target6.x=490
-target6.y=170
-target7.editor.height=728
-target7.editor.width=683
-target7.editor.x=683
-target7.editor.y=0
-=======
-target6.x=310
-target6.y=350
+target6.x=150
+target6.y=410
 target7.editor.height=700
 target7.editor.width=900
 target7.editor.x=422
 target7.editor.y=46
->>>>>>> origin/master
 target7.height=50
 target7.name=Game
 target7.naviview.expanded=true
@@ -230,7 +202,7 @@ target7.showInterface=false
 target7.type=ClassTarget
 target7.typeParameters=
 target7.width=80
-target7.x=60
+target7.x=70
 target7.y=240
 target8.editor.height=780
 target8.editor.width=1378

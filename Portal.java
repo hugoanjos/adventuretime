@@ -81,7 +81,7 @@ public class Portal
                 width = image.getWidth(null);
                 height = image.getHeight(null);
                 break;
-                
+            
         }
     }
 }

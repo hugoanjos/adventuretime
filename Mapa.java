@@ -64,4 +64,9 @@ public class Mapa
     public int getDificuldade(){
         return this.dificuldade;
     }
+    
+    public boolean isLeaf(){
+        if(this.esquerdo == null && this.direito == null) return true;
+        else return false;
+    }
 }

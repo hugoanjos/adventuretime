@@ -19,7 +19,10 @@ public class ListaInimigos
     private Spawnpoint p8 = new Spawnpoint((400+r.nextInt(400)), 150);
     private Spawnpoint p9 = new Spawnpoint((400+r.nextInt(400)), 350);
     private Spawnpoint p10 = new Spawnpoint((400+r.nextInt(400)), 450);
-    private Spawnpoint[] spawnpoints = {p1, p2, p3, p4, p5, p6, p7, p8, p9, p10};
+    private Spawnpoint p11 = new Spawnpoint((400+r.nextInt(400)), 50);
+    private Spawnpoint p12 = new Spawnpoint((400+r.nextInt(400)), 600);
+    private Spawnpoint p13 = new Spawnpoint((400+r.nextInt(400)), 0);
+    private Spawnpoint[] spawnpoints = {p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13};
     
     public ListaInimigos() {
         this.inicio = null;

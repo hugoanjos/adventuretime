@@ -51,7 +51,7 @@ public class Grid extends JPanel implements ActionListener {
         player = new Player();
         portal1 = new Portal(600, 100, "portal1");
         portal1.setHitbox(portal1.getX(), portal1.getY(), portal1.getWidth(), portal1.getHeight());
-        portal2 = new Portal(600, 400, "portal2");
+        portal2 = new Portal(600, 350, "portal2");
         portal2.setHitbox(portal2.getX(), portal2.getY(), portal2.getWidth(), portal2.getHeight());
         //enemy = new Enemy();
         
@@ -103,6 +103,13 @@ public class Grid extends JPanel implements ActionListener {
                                         //caso um ataque colida com um inimigo, remover ambos
                                         lista.remover(i);
                                         listaInimigos.remover(j);
+                                        if(listaInimigos.isEmpty()){
+                                            while(!lista.isEmpty()){
+                                                lista.remover(0);
+                                            }
+                                            if(player.getX() >= portal1.getX()) player.setX(player.getX() - 150);
+                                            player.setHitbox(player.getX(), player.getY(), player.getWidth(), player.getHeight());
+                                        }
                                         score.addScore(100);
                                         j = listaInimigos.getSize();
                                     }
@@ -150,7 +157,7 @@ public class Grid extends JPanel implements ActionListener {
                 }
             } else {
                 if((!player.getHitbox().intersects(portal1.getHitbox())) && (!player.getHitbox().intersects(portal2.getHitbox()))) {
-                    enemyAlive = false;
+                    enemyAlive = false;                    
                 }
             }
         } else {
@@ -172,8 +179,12 @@ public class Grid extends JPanel implements ActionListener {
             
             if (mapaAtual.getDireito() != null) {
                 g2d.drawImage(portal1.getImage(), portal1.getX(), portal1.getY(), this);
-                g2d.drawString("Inimigos: " + mapaAtual.getDireito().getNumInimigos(), 620, portal1.getY()+portal1.getHeight()+30);
+                if(mapaAtual.getDireito().isLeaf()) g2d.drawString("EXIT", 640, portal1.getY()+portal1.getHeight()+50);
+                g2d.drawString("Enemies: " + mapaAtual.getDireito().getNumInimigos(), 620, portal1.getY()+portal1.getHeight()+30);
                 if (player.getHitbox().intersects(portal1.getHitbox())) {
+                    while(!lista.isEmpty()){
+                        lista.remover(0);
+                    }
                     mapaAtual.setClear(true);
                     mapaAtual = mapaAtual.getDireito();
                     player.setX(50);
@@ -185,8 +196,12 @@ public class Grid extends JPanel implements ActionListener {
             
             if (mapaAtual.getEsquerdo() != null) {
                 g2d.drawImage(portal2.getImage(), portal2.getX(), portal2.getY(), this);
-                g2d.drawString("Inimigos: " + mapaAtual.getEsquerdo().getNumInimigos(), 620, portal2.getY()+portal2.getHeight()+30);
+                if(mapaAtual.getEsquerdo().isLeaf())g2d.drawString("EXIT", 640, portal2.getY()+portal2.getHeight()+50);
+                g2d.drawString("Enemies: " + mapaAtual.getEsquerdo().getNumInimigos(), 620, portal2.getY()+portal2.getHeight()+30);
                 if (player.getHitbox().intersects(portal2.getHitbox())) {
+                    while(!lista.isEmpty()){
+                        lista.remover(0);
+                    }
                     mapaAtual.setClear(true);
                     mapaAtual = mapaAtual.getEsquerdo();
                     player.setX(50);
@@ -226,6 +241,7 @@ public class Grid extends JPanel implements ActionListener {
         font = font.deriveFont(Font.PLAIN,20);
         g2d.setFont(font);
         g2d.drawString("Use the arrow keys to move and SPACE to attack.", 215, 400);
+        g2d.drawString("After all enemies are defeated, choose the next map until you reach an EXIT.", 120, 420);
     }
     
     public void actionPerformed(ActionEvent e) {  
