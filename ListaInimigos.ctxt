@@ -1,0 +1,18 @@
+#BlueJ class context
+comment0.params=
+comment0.target=ListaInimigos()
+comment1.params=_enemy
+comment1.target=void\ inserir(Enemy)
+comment2.params=qntd
+comment2.target=void\ inserirInimigos(int)
+comment3.params=pos
+comment3.target=void\ remover(int)
+comment4.params=_enemy
+comment4.target=int\ buscar(Enemy)
+comment5.params=
+comment5.target=int\ getSize()
+comment6.params=pos
+comment6.target=Enemy\ getInimigo(int)
+comment7.params=
+comment7.target=boolean\ isEmpty()
+numComments=8

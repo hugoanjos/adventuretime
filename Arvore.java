@@ -80,4 +80,8 @@ public class Arvore
         }
         return root;
     }
+    
+    public Mapa getRaiz() {
+        return raiz;
+    }
 }

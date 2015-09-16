@@ -16,12 +16,14 @@ public class Enemy
     private int width;
     private int height;
     private Image image;
+    private Enemy proximo;
     private String direcao;
     private String left = "images/enemyleft.png";
     private String right = "images/enemyright.png";
     private String up = "images/enemyup.png";
     private String down = "images/enemydown.png";;
     private Rectangle hitbox;
+    private int enemyMove = 0;
     
     public Enemy() {
         this(200, 300, "esquerda");
@@ -49,9 +51,17 @@ public class Enemy
     public void setY(int y) {
         this.y = y;
     }
+    
+    public void setEnemyMove(int enemyMove) {
+        this.enemyMove = enemyMove;
+    }
         
     public Image getImage() {
         return image;
+    }
+    
+    public Enemy getProximo() {
+        return proximo;
     }
     
     public int getWidth() {
@@ -62,12 +72,20 @@ public class Enemy
         return height;
     }
     
+    public int getEnemyMove() {
+        return enemyMove;
+    }
+    
     public Rectangle getHitbox() {
         return hitbox;
     }
     
     public String getDirecao() {
         return direcao;
+    }
+    
+    public void setProximo(Enemy _enemy) {
+        this.proximo = _enemy;
     }
     
     public void setDirecao(String direcao) {

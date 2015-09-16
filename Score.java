@@ -36,6 +36,10 @@ public class Score extends JPanel
         this.score = this.score + points;
     }
     
+    public int getScore() {
+        return score;
+    }
+    
     /**
     * Este método subtrai o número de pontos ao score.
     * 

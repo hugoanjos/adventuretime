@@ -8,6 +8,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.lang.Math;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import java.io.File;
@@ -19,11 +20,20 @@ public class Grid extends JPanel implements ActionListener {
     private Player player;
     private Enemy enemy;
     private Ataque attack;
-    private String direcao;
+    private String direcao = "direita";
     private Lista lista = new Lista();
+    private Nivel nivel;
+    private Arvore arvore;
+    private Mapa mapaAtual;
+    private ListaInimigos listaInimigos = new ListaInimigos();
+    private Portal portal1;
+    private Portal portal2;
     public int enemyMove;
+    private boolean enemyAlive = true;
+    private boolean gameOver = false;
+    private boolean zerado = false;
     
-    private boolean isPlaying = true;
+    private boolean isPlaying = false;
 
     private Font font;
        
@@ -39,11 +49,21 @@ public class Grid extends JPanel implements ActionListener {
         add(score);       
         
         player = new Player();
-        enemy = new Enemy();
+        portal1 = new Portal(600, 100, "portal1");
+        portal1.setHitbox(portal1.getX(), portal1.getY(), portal1.getWidth(), portal1.getHeight());
+        portal2 = new Portal(600, 400, "portal2");
+        portal2.setHitbox(portal2.getX(), portal2.getY(), portal2.getWidth(), portal2.getHeight());
+        //enemy = new Enemy();
         
-        enemyMove = 0;
+        nivel = new Nivel();
+        arvore = nivel.gerarArvoreAleatoria();
+        mapaAtual = arvore.getRaiz();
+        listaInimigos.inserirInimigos(mapaAtual.getNumInimigos());
+        //listaInimigos.inserirInimigos(3);
         
-        timer = new Timer(5, this);
+        //enemyMove = 0;
+        
+        timer = new Timer(6, this);
         timer.start();
     }
 
@@ -56,53 +76,170 @@ public class Grid extends JPanel implements ActionListener {
         
         if (isPlaying) {
             g2d.drawImage(player.getImage(), player.getX(), player.getY(), this);
-            g2d.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(), this);
+            if(listaInimigos.isEmpty() == false) {
+                for (int i = 0; i < listaInimigos.getSize(); i++) {
+                    g2d.drawImage(listaInimigos.getInimigo(i).getImage(), listaInimigos.getInimigo(i).getX(), listaInimigos.getInimigo(i).getY(), this);
+                }
+            } else {
+                enemyAlive = false;
+            }
+            player.setHitbox(player.getX(), player.getY(), player.getWidth(), player.getHeight());
+            
             if (lista.isEmpty() == false) {
                 for (int i = 0; i < lista.getSize(); i++) {
+                        //move o ataque
                         lista.getAtaque(i).mover();
-                        //if (lista.getAtaque(i).getX() < 0 || lista.getAtaque(i).getX() > 800 || lista.getAtaque(i).getY() < 0 || lista.getAtaque(i).getY() > 600) {
-                          //  lista.remover(i);
-                        //}
+                        //set hitbox do ataque
+                        lista.getAtaque(i).setHitbox(lista.getAtaque(i).getX(), lista.getAtaque(i).getY(), lista.getAtaque(i).getWidth(), lista.getAtaque(i).getHeight());
+                        //desenha o ataque
                         g2d.drawImage(lista.getAtaque(i).getImage(), lista.getAtaque(i).getX(), lista.getAtaque(i).getY(), this);
+                        if (lista.getAtaque(i).getX() < 0 || lista.getAtaque(i).getX() > 800 || lista.getAtaque(i).getY() < 0 || lista.getAtaque(i).getY() > 600) {
+                            //remove o ataque caso ele saia da tela
+                            lista.remover(i);
+                        } else {
+                            if (listaInimigos.isEmpty() == false) {
+                                for (int j = 0; j < listaInimigos.getSize(); j++) {
+                                    if (lista.getAtaque(i).getHitbox().intersects(listaInimigos.getInimigo(j).getHitbox())) {
+                                        //caso um ataque colida com um inimigo, remover ambos
+                                        lista.remover(i);
+                                        listaInimigos.remover(j);
+                                        score.addScore(100);
+                                        j = listaInimigos.getSize();
+                                    }
+                                }
+                            }
+
+                        }
                 }
             }
-            if (enemy != null){
-                if(enemyMove < 50){
-                    enemyMove++;
-                } else {
-                    int maiorDist = player.getX() - enemy.getX();
-                    if(Math.abs(maiorDist) < Math.abs(player.getY() - enemy.getY())){
-                        maiorDist = player.getY() - enemy.getY();
-                        if(maiorDist < 0) {
-                            enemy.setImage("cima");
-                            enemy.setDirecao("cima");
-                        } else {
-                            enemy.setImage("baixo");
-                            enemy.setDirecao("baixo");
-                        }
+            
+            if (listaInimigos.isEmpty() == false) {
+                enemyAlive = true;
+                for (int i = 0; i < listaInimigos.getSize(); i++) {
+                    if(listaInimigos.getInimigo(i).getEnemyMove() < 50){
+                        listaInimigos.getInimigo(i).setEnemyMove(listaInimigos.getInimigo(i).getEnemyMove()+1);
                     } else {
-                        if(maiorDist < 0) {
-                            enemy.setImage("esquerda");
-                            enemy.setDirecao("esquerda");
+                        int maiorDist = player.getX() - listaInimigos.getInimigo(i).getX();
+                        if(Math.abs(maiorDist) < Math.abs(player.getY() - listaInimigos.getInimigo(i).getY())){
+                            maiorDist = player.getY() - listaInimigos.getInimigo(i).getY();
+                            if(maiorDist < 0) {
+                                listaInimigos.getInimigo(i).setImage("cima");
+                                listaInimigos.getInimigo(i).setDirecao("cima");
+                            } else {
+                                listaInimigos.getInimigo(i).setImage("baixo");
+                                listaInimigos.getInimigo(i).setDirecao("baixo");
+                            }
                         } else {
-                            enemy.setImage("direita");
-                            enemy.setDirecao("direita");
+                            if(maiorDist < 0) {
+                                listaInimigos.getInimigo(i).setImage("esquerda");
+                                listaInimigos.getInimigo(i).setDirecao("esquerda");
+                            } else {
+                                listaInimigos.getInimigo(i).setImage("direita");
+                                listaInimigos.getInimigo(i).setDirecao("direita");
+                            }
+                        }
+                        listaInimigos.getInimigo(i).mover();
+                        listaInimigos.getInimigo(i).setHitbox(listaInimigos.getInimigo(i).getX(), listaInimigos.getInimigo(i).getY(), listaInimigos.getInimigo(i).getWidth(), listaInimigos.getInimigo(i).getHeight());
+                        g2d.drawImage(listaInimigos.getInimigo(i).getImage(), listaInimigos.getInimigo(i).getX(), listaInimigos.getInimigo(i).getY(), this);
+                        listaInimigos.getInimigo(i).setEnemyMove(0);
+                            
+                        if (player.getHitbox().intersects(listaInimigos.getInimigo(i).getHitbox())) {
+                            gameOver = true;
                         }
                     }
-                    enemy.mover();
-                    g2d.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(), this);
-                    enemyMove = 0;
+                }
+            } else {
+                if((!player.getHitbox().intersects(portal1.getHitbox())) && (!player.getHitbox().intersects(portal2.getHitbox()))) {
+                    enemyAlive = false;
                 }
             }
+        } else {
+            pressToStart(g);
         }
 
+        if (enemyAlive == false) {
+            try{
+                File file = new File("fonts/VT323-Regular.ttf");
+                font = Font.createFont(Font.TRUETYPE_FONT, file);
+                GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+                ge.registerFont(font);
+                font = font.deriveFont(Font.PLAIN,20);
+                g2d.setFont(font);
+                g2d.setColor(Color.WHITE);
+            }catch (Exception e){
+                System.out.println(e.toString());
+            }   
+            
+            if (mapaAtual.getDireito() != null) {
+                g2d.drawImage(portal1.getImage(), portal1.getX(), portal1.getY(), this);
+                g2d.drawString("Inimigos: " + mapaAtual.getDireito().getNumInimigos(), 620, portal1.getY()+portal1.getHeight()+30);
+                if (player.getHitbox().intersects(portal1.getHitbox())) {
+                    mapaAtual.setClear(true);
+                    mapaAtual = mapaAtual.getDireito();
+                    player.setX(50);
+                    player.setY(300);
+                    listaInimigos.inserirInimigos(mapaAtual.getNumInimigos());
+                    enemyAlive = true;
+                }
+            }
+            
+            if (mapaAtual.getEsquerdo() != null) {
+                g2d.drawImage(portal2.getImage(), portal2.getX(), portal2.getY(), this);
+                g2d.drawString("Inimigos: " + mapaAtual.getEsquerdo().getNumInimigos(), 620, portal2.getY()+portal2.getHeight()+30);
+                if (player.getHitbox().intersects(portal2.getHitbox())) {
+                    mapaAtual.setClear(true);
+                    mapaAtual = mapaAtual.getEsquerdo();
+                    player.setX(50);
+                    player.setY(300);
+                    listaInimigos.inserirInimigos(mapaAtual.getNumInimigos());
+                    enemyAlive = true;
+                }
+            }
+            
+            if (enemyAlive == false && mapaAtual.getEsquerdo() == null && mapaAtual.getDireito() == null) {
+                zerado = true;
+            }
+           
+        }
+        
         Toolkit.getDefaultToolkit().sync();
         g.dispose();
         
     }
-
-    public void actionPerformed(ActionEvent e) {        
-        repaint();  
+    
+    public void pressToStart(Graphics g) {
+        isPlaying = false;
+        Graphics2D g2d = (Graphics2D) g;
+        try{
+            File file = new File("fonts/VT323-Regular.ttf");
+            font = Font.createFont(Font.TRUETYPE_FONT, file);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(font);
+            font = font.deriveFont(Font.PLAIN,36);
+            g2d.setFont(font);
+            g2d.setColor(Color.WHITE);
+        }catch (Exception e){
+            System.out.println(e.toString());
+        }
+        g2d.drawString("ADVENTURE TIME", 295, 250);
+        g2d.drawString("Press ENTER to start", 250, 300);
+        font = font.deriveFont(Font.PLAIN,20);
+        g2d.setFont(font);
+        g2d.drawString("Use the arrow keys to move and SPACE to attack.", 215, 400);
+    }
+    
+    public void actionPerformed(ActionEvent e) {  
+        if (zerado == true) {
+            JOptionPane.showMessageDialog (null, "Congratulations!\nYou reached the end.\nYour score was: " + score.getScore());
+            System.exit(0);
+        }
+        
+        if (gameOver == false) {
+            repaint();
+        } else {
+            JOptionPane.showMessageDialog (null, "Game over!\nYour score was: " + score.getScore());
+            System.exit(0);
+        }
     }
 
     private class TAdapter extends KeyAdapter {
@@ -114,38 +251,48 @@ public class Grid extends JPanel implements ActionListener {
 
             switch (key){
                 case KeyEvent.VK_ENTER:
-                    score.addScore(100);
+                    isPlaying = true;
                     break;
                     
                 case KeyEvent.VK_LEFT:
                     player.setImage("esquerda");
-                    player.setX(player.getX()-50);
+                    if((player.getX()-20) > 0) {
+                        player.setX(player.getX()-50);
+                    }
                     direcao = "esquerda"; 
                     break;
                     
                 case KeyEvent.VK_RIGHT:
                     player.setImage("direita");
-                    player.setX(player.getX()+50);
+                    if((player.getX()+50) < 800) {
+                        player.setX(player.getX()+50);
+                    }
                     direcao = "direita";
                     break;
                     
                 case KeyEvent.VK_UP:
                     player.setImage("cima");
-                    player.setY(player.getY()-50);
+                    if((player.getY()-20) > 0) {
+                        player.setY(player.getY()-50);
+                    }
                     direcao = "cima";
                     break;
                     
                 case KeyEvent.VK_DOWN:
                     player.setImage("baixo");
-                    player.setY(player.getY()+50);
+                    if((player.getY()+50) < 600) {
+                        player.setY(player.getY()+50);
+                    }
                     direcao = "baixo";
                     break;
                     
                 case KeyEvent.VK_SPACE:
-                    lista.inserir(new Ataque(player.getX(), player.getY(), direcao));
-
+                    if (isPlaying == true) {
+                        if (lista.getSize() < 6) {
+                            lista.inserir(new Ataque(player.getX()+10, player.getY()+10, direcao));
+                        }
+                    }
                     break;
-            
                 }
             }
     }

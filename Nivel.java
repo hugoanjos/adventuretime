@@ -13,13 +13,14 @@ public class Nivel
             dificuldade++;
         }
         level++;
-        tree = gerarArvoreAleatoria();
+        //tree = gerarArvoreAleatoria();
     }
     
     public Arvore gerarArvoreAleatoria(){
         Arvore aux = new Arvore();
-        for(int i = 0; i < 5; i++){
+        for(int i = 0; i < 6; i++){
             aux.inserir(gerarMapaAleatorio());
+            level++;
         }
         return aux;
     }
