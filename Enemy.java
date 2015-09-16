@@ -21,7 +21,7 @@ public class Enemy
     private String left = "images/enemyleft.png";
     private String right = "images/enemyright.png";
     private String up = "images/enemyup.png";
-    private String down = "images/enemydown.png";;
+    private String down = "images/enemydown.png";
     private Rectangle hitbox;
     private int enemyMove = 0;
     
@@ -31,6 +31,13 @@ public class Enemy
     
     public Enemy(int x, int y, String direcao) {
         this.direcao = direcao;
+        Random sorteio = new Random();
+        if(sorteio.nextInt(50) % 2 == 0){
+            left = "images/enemy2left.png";
+            right = "images/enemy2right.png";
+            up = "images/enemy2up.png";
+            down = "images/enemy2down.png";
+        }
         setImage(direcao);
         this.x = x;
         this.y = y;
